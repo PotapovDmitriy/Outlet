@@ -22,14 +22,10 @@ public class GalleryViewModel extends ViewModel {
 
 
     public GalleryViewModel() {
-        ArrayList<Product> productList = getProductList();
-        mText = new MutableLiveData<>();
-        mText.setValue("Product list have " + productList.size() + " products ");
+
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
+
 
     public ArrayList<Product> getProductList() {
         AsyncRequest asyncRequest = new AsyncRequest();
@@ -43,6 +39,7 @@ public class GalleryViewModel extends ViewModel {
                 String globalId = jsProduct.getString("global_item_id");
                 String maintenanceGroup = jsProduct.getString("maintenance_group");
                 JSONArray variants = jsProduct.getJSONArray("variants");
+                String description = jsProduct.getJSONArray("descriptions").getJSONObject(1).getString("description");
                 for (int j = 0; j < variants.length(); j++) {
                     JSONObject jsVariant = variants.getJSONObject(j);
                     Boolean isSale = jsVariant.getBoolean("sale");
@@ -50,10 +47,20 @@ public class GalleryViewModel extends ViewModel {
                         continue;
                     }
                     String productId = jsVariant.getString("product_id");
-                    int originalPrice = jsVariant.getInt("original_price");
-                    int currentPrice = jsVariant.getInt("current_price");
-                    String images = jsVariant.getJSONArray("images").getJSONObject(0).getString("key");
-                    Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, images, currentPrice, originalPrice);
+                    String originalPrice = jsVariant.getInt("original_price") + "₽";
+                    String currentPrice = jsVariant.getInt("current_price") + "₽";
+                    JSONArray images = jsVariant.getJSONArray("images");
+                    String image = "";
+                    for (int k = 0; k < images.length(); k++) {
+                        JSONObject jsonObjectImage = images.getJSONObject(k);
+                        if (jsonObjectImage.getString("type").equals("OUTFIT_VIDEO")){
+                            continue;
+                        }
+                        image = jsonObjectImage.getString("key");
+                        k = images.length();
+                    }
+
+                    Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, image, currentPrice, originalPrice, description);
                     productsList.add(product);
                     j = variants.length();
                 }

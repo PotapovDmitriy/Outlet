@@ -7,10 +7,11 @@ public class Product {
     private String maintenanceGroup;
     private boolean sale;
     private String imagePath;
-    private int currentPrice;
-    private int originalPrice;
+    private String currentPrice;
+    private String originalPrice;
+    private String Name;
 
-    public Product(String globalItemId, String id, String productId, String maintenanceGroup, boolean sale, String imagePath, int currentPrice, int originalPrice) {
+    public Product(String globalItemId, String id, String productId, String maintenanceGroup, boolean sale, String imagePath, String currentPrice, String originalPrice, String name) {
         this.globalItemId = globalItemId;
         this.id = id;
         this.productId = productId;
@@ -19,14 +20,7 @@ public class Product {
         this.imagePath = imagePath;
         this.currentPrice = currentPrice;
         this.originalPrice = originalPrice;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public String getImagePath() {
-        return imagePath;
+        Name = name;
     }
 
     public void setGlobalItemId(String globalItemId) {
@@ -49,12 +43,20 @@ public class Product {
         this.sale = sale;
     }
 
-    public void setCurrentPrice(int currentPrice) {
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setCurrentPrice(String currentPrice) {
         this.currentPrice = currentPrice;
     }
 
-    public void setOriginalPrice(int originalPrice) {
+    public void setOriginalPrice(String originalPrice) {
         this.originalPrice = originalPrice;
+    }
+
+    public void setName(String name) {
+        Name = name;
     }
 
     public String getGlobalItemId() {
@@ -77,11 +79,19 @@ public class Product {
         return sale;
     }
 
-    public int getCurrentPrice() {
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public String getCurrentPrice() {
         return currentPrice;
     }
 
-    public int getOriginalPrice() {
+    public String getOriginalPrice() {
         return originalPrice;
+    }
+
+    public String getName() {
+        return Name;
     }
 }
