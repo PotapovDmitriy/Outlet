@@ -33,19 +33,13 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         galleryViewModel =
                 new ViewModelProvider(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-
         btnMen = root.findViewById(R.id.button2);
         btnWomen = root.findViewById(R.id.button);
         btnWomen.setBackgroundColor(Color.GRAY);
         btnWomen.setClickable(false);
-
         btnWomen.setOnClickListener(this);
         btnMen.setOnClickListener(this);
-
         recyclerView = root.findViewById(R.id.recycleIdNewYorker);
-
-        recyclerView.setOnClickListener(this);
-
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);

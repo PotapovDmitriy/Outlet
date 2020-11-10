@@ -35,6 +35,8 @@ public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.Prod
         View view = inflater.inflate(layoutIdForListItem, parent, false);
         Product product = productList.get(counter);
         ProductViewHolder viewHolder = new ProductViewHolder(view);
+
+
         viewHolder.tvOriginPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.tvOriginPrice.setText(String.valueOf(product.getOriginalPrice()));
         viewHolder.tvCurrentPrice.setText(String.valueOf(product.getCurrentPrice()));
@@ -56,8 +58,17 @@ public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.Prod
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        holder.tvCurrentPrice.setText(String.valueOf(productList.get(position).getCurrentPrice()));
-        holder.tvOriginPrice.setText(String.valueOf(productList.get(position).getOriginalPrice()));
+        Product product = productList.get(position);
+        holder.tvCurrentPrice.setText(String.valueOf(product.getCurrentPrice()));
+        holder.tvOriginPrice.setText(String.valueOf(product.getOriginalPrice()));
+        holder.tvName.setText(product.getName());
+
+        Picasso.get()
+                .load("https://nyblobstoreprod.blob.core.windows.net/product-images-public/" + product.getImagePath())
+                .placeholder(R.drawable.ic_menu_manage)
+                .error(R.drawable.ic_menu_camera)
+                .fit()
+                .into(holder.imageView);
     }
 
     @Override
