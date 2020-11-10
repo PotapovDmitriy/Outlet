@@ -19,11 +19,10 @@ import java.util.ArrayList;
 public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.ProductViewHolder> {
 
     private final ArrayList<Product> productList;
-    private int counter;
+    View view;
 
     public NewYorkerAdapter(ArrayList<Product> productList) {
         this.productList = productList;
-        counter = 0;
     }
 
     @NonNull
@@ -32,20 +31,14 @@ public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.Prod
         Context context = parent.getContext();
         int layoutIdForListItem = R.layout.newyorker_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(layoutIdForListItem, parent, false);
-        Product product = productList.get(counter);
+        view = inflater.inflate(layoutIdForListItem, parent, false);
+        Product product = productList.get(viewType);
         ProductViewHolder viewHolder = new ProductViewHolder(view);
-
-
         viewHolder.tvOriginPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         viewHolder.tvOriginPrice.setText(String.valueOf(product.getOriginalPrice()));
         viewHolder.tvCurrentPrice.setText(String.valueOf(product.getCurrentPrice()));
         viewHolder.tvName.setText(product.getName());
-        view.setOnClickListener(view1 -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.newyorker.de/ru/products/#/detail/" + product.getProductId() + "/001?custom=sale"));
-            view1.getContext().startActivity(intent);
-        });
-        counter++;
+        viewHolder.tvName.setText(product.getProductId());
         Picasso.get()
                 .load("https://nyblobstoreprod.blob.core.windows.net/product-images-public/" + product.getImagePath())
                 .placeholder(R.drawable.ic_menu_manage)
@@ -56,12 +49,20 @@ public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.Prod
         return viewHolder;
     }
 
+    private void  bind(ProductViewHolder holder){
+        view.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(holder.tvLink.getText().toString()));
+            view1.getContext().startActivity(intent);
+        });
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.tvCurrentPrice.setText(String.valueOf(product.getCurrentPrice()));
         holder.tvOriginPrice.setText(String.valueOf(product.getOriginalPrice()));
         holder.tvName.setText(product.getName());
+        holder.tvLink.setText("https://www.newyorker.de/ru/products/#/detail/" + product.getProductId() + "/" + product.getGlobalItemId()+ "?custom=sale");
 
         Picasso.get()
                 .load("https://nyblobstoreprod.blob.core.windows.net/product-images-public/" + product.getImagePath())
@@ -69,6 +70,7 @@ public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.Prod
                 .error(R.drawable.ic_menu_camera)
                 .fit()
                 .into(holder.imageView);
+        bind(holder);
     }
 
     @Override
@@ -79,7 +81,7 @@ public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.Prod
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvCurrentPrice, tvOriginPrice, tvName;
+        TextView tvCurrentPrice, tvOriginPrice, tvName, tvLink;
         ImageView imageView;
 
         public ProductViewHolder(@NonNull View itemView) {
@@ -88,6 +90,7 @@ public class NewYorkerAdapter extends RecyclerView.Adapter<NewYorkerAdapter.Prod
             tvCurrentPrice = itemView.findViewById(R.id.tvNewYorkerCurrentPrice);
             tvOriginPrice = itemView.findViewById(R.id.tvNewYorkerOrigPrice);
             tvName = itemView.findViewById(R.id.tvName);
+            tvLink = itemView.findViewById(R.id.tvLink);
         }
     }
 }

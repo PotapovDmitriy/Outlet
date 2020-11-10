@@ -45,6 +45,15 @@
             android:textColor="@color/red"
             android:textSize="28sp"
             tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tvLink"
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:paddingStart="10sp"
+            android:text="TextView"
+            android:visibility="invisible"
+            />
     </FrameLayout>
 
 

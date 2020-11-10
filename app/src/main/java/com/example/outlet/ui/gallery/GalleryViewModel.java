@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 
@@ -28,17 +29,20 @@ public class GalleryViewModel extends ViewModel {
             for (int i = 0; i < productsJsonArray.length(); i++) {
                 JSONObject jsProduct = productsJsonArray.getJSONObject(i);
                 String id = jsProduct.getString("id");
-                String globalId = jsProduct.getString("global_item_id");
+//                String globalId = jsProduct.getString("global_item_id");
                 String maintenanceGroup = jsProduct.getString("maintenance_group");
                 JSONArray variants = jsProduct.getJSONArray("variants");
                 String description = "No description";
                 try{
                     description = jsProduct.getJSONArray("descriptions").getJSONObject(1).getString("description");
                 }
-                catch (Error e){
-                    System.out.println(e.getStackTrace());
-                }
+                catch (IndexOutOfBoundsException e ){
+                    System.out.println(Arrays.toString(e.getStackTrace()));
 
+                    description = maintenanceGroup;
+                    System.out.println(description);
+                }
+                System.out.println(description);
                 for (int j = 0; j < variants.length(); j++) {
                     JSONObject jsVariant = variants.getJSONObject(j);
                     boolean isSale = jsVariant.getBoolean("sale");
@@ -58,7 +62,7 @@ public class GalleryViewModel extends ViewModel {
                         image = jsonObjectImage.getString("key");
                         k = images.length();
                     }
-
+                    String globalId = jsVariant.getString("id");
                     Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, image, currentPrice, originalPrice, description);
                     productsList.add(product);
                     j = variants.length();

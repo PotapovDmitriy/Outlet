@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,8 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     private NewYorkerAdapter adapter;
     private Button btnMen, btnWomen;
     private ArrayList<Product> productList;
+    private TextView tvGender;
+    private boolean flag;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,14 +42,13 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         btnWomen.setClickable(false);
         btnWomen.setOnClickListener(this);
         btnMen.setOnClickListener(this);
+        tvGender = root.findViewById(R.id.tvGender);
+        flag = true;
+
         recyclerView = root.findViewById(R.id.recycleIdNewYorker);
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=FEMALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
-        adapter = new NewYorkerAdapter(productList);
-
-        recyclerView.setAdapter(adapter);
         return root;
     }
 
@@ -54,8 +56,14 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
+        if (flag){
+            tvGender.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+            flag = false;
+        }
         switch (v.getId()) {
             case R.id.button: {
+                System.out.println("Click ClickClickClick");
                 productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=FEMALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
                 btnWomen.setClickable(false);
                 btnWomen.setBackgroundColor(Color.GRAY);
