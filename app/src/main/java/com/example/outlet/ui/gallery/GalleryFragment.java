@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +23,7 @@ import com.example.outlet.models.Product;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment implements View.OnClickListener {
+public class GalleryFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
     private GalleryViewModel galleryViewModel;
     private RecyclerView recyclerView;
@@ -30,7 +32,9 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     private ArrayList<Product> productList;
     private TextView tvGender;
     private boolean flag;
+    private ProgressBar progressBar;
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
@@ -38,12 +42,14 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         btnMen = root.findViewById(R.id.button2);
         btnWomen = root.findViewById(R.id.button);
-        btnWomen.setBackgroundColor(Color.GRAY);
-        btnWomen.setClickable(false);
         btnWomen.setOnClickListener(this);
         btnMen.setOnClickListener(this);
+        btnWomen.setOnTouchListener(this);
+        btnMen.setOnTouchListener(this);
         tvGender = root.findViewById(R.id.tvGender);
         flag = true;
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         recyclerView = root.findViewById(R.id.recycleIdNewYorker);
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
@@ -56,11 +62,6 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        if (flag){
-            tvGender.setVisibility(View.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-            flag = false;
-        }
         switch (v.getId()) {
             case R.id.button: {
                 System.out.println("Click ClickClickClick");
@@ -85,5 +86,19 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 break;
             }
         }
+        progressBar.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.isClickable()) {
+            if (flag) {
+                tvGender.setVisibility(View.INVISIBLE);
+                flag = false;
+            }
+            recyclerView.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        return false;
     }
 }

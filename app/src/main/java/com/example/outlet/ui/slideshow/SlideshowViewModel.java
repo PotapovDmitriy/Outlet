@@ -29,11 +29,11 @@ public class SlideshowViewModel extends ViewModel {
     }
 
 
-    public ArrayList<Product> getProductList() {
+    public ArrayList<Product> getProductList(String url) {
         AsyncRequest asyncRequest = new AsyncRequest();
         ArrayList<Product> productsList = new ArrayList<>();
         try {
-            JSONObject jsonObject = asyncRequest.execute("all")
+            JSONObject jsonObject = asyncRequest.execute(url)
                     .get()
                     .getJSONObject("raw")
                     .getJSONObject("itemList");
@@ -48,7 +48,7 @@ public class SlideshowViewModel extends ViewModel {
                 String image = jsProduct.getJSONObject("image").getString("src");
                 String maintenanceGroup = jsProduct.getString("category");
                 String description = jsProduct.getString("displayName");
-                jsProduct = asyncProduct.execute("one",id).get();
+                jsProduct = asyncProduct.execute(id).get();
                 String originalPrice = jsProduct.getInt("price") + "₽";
                 String currentPrice = jsProduct.getInt("salePrice") + "₽";
                 Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, image, currentPrice, originalPrice, description);
@@ -66,22 +66,14 @@ public class SlideshowViewModel extends ViewModel {
         @Override
         protected JSONObject doInBackground(String... strings) {
             JsonRequestService jsonRequestService = new JsonRequestService();
-            if(strings[0].equals("all")) {
-                System.out.println("Start of async for all product");
-                return jsonRequestService.readJsonFromUrl("https://www.adidas.ru/api/plp/content-engine?query=muzhchiny-outlet");
-            }
-            return jsonRequestService.readJsonFromUrl("https://www.adidas.ru/api/search/product/" + strings[1]);
+            return jsonRequestService.readJsonFromUrl(strings[0]);
         }
     }
     private class AsyncProductRequest extends AsyncTask<String, Void, JSONObject>{
         @Override
         protected JSONObject doInBackground(String... strings) {
             JsonRequestService jsonRequestService = new JsonRequestService();
-            if(strings[0].equals("all")) {
-                System.out.println("Start of async for all product");
-                return jsonRequestService.readJsonFromUrl("https://www.adidas.ru/api/plp/content-engine?query=muzhchiny-outlet");
-            }
-            return jsonRequestService.readJsonFromUrl("https://www.adidas.ru/api/search/product/" + strings[1]);
+            return jsonRequestService.readJsonFromUrl("https://www.adidas.ru/api/search/product/" + strings[0]);
         }
     }
 }
