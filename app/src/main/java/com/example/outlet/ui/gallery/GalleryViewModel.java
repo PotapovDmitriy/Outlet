@@ -1,24 +1,17 @@
 package com.example.outlet.ui.gallery;
 
 import android.os.AsyncTask;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.outlet.models.Product;
 import com.example.outlet.services.JsonRequestService;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class GalleryViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+public class GalleryViewModel extends ViewModel {
 
 
     public GalleryViewModel() {
@@ -26,12 +19,11 @@ public class GalleryViewModel extends ViewModel {
     }
 
 
-
-    public ArrayList<Product> getProductList() {
+    public ArrayList<Product> getProductList(String url) {
         AsyncRequest asyncRequest = new AsyncRequest();
         ArrayList<Product> productsList = new ArrayList<>();
         try {
-            JSONObject jsonObject = asyncRequest.execute().get();
+            JSONObject jsonObject = asyncRequest.execute(url).get();
             JSONArray productsJsonArray = jsonObject.getJSONArray("items");
             for (int i = 0; i < productsJsonArray.length(); i++) {
                 JSONObject jsProduct = productsJsonArray.getJSONObject(i);
@@ -39,10 +31,17 @@ public class GalleryViewModel extends ViewModel {
                 String globalId = jsProduct.getString("global_item_id");
                 String maintenanceGroup = jsProduct.getString("maintenance_group");
                 JSONArray variants = jsProduct.getJSONArray("variants");
-                String description = jsProduct.getJSONArray("descriptions").getJSONObject(1).getString("description");
+                String description = "No description";
+                try{
+                    description = jsProduct.getJSONArray("descriptions").getJSONObject(1).getString("description");
+                }
+                catch (Error e){
+                    System.out.println(e.getStackTrace());
+                }
+
                 for (int j = 0; j < variants.length(); j++) {
                     JSONObject jsVariant = variants.getJSONObject(j);
-                    Boolean isSale = jsVariant.getBoolean("sale");
+                    boolean isSale = jsVariant.getBoolean("sale");
                     if (!isSale) {
                         continue;
                     }
@@ -53,7 +52,7 @@ public class GalleryViewModel extends ViewModel {
                     String image = "";
                     for (int k = 0; k < images.length(); k++) {
                         JSONObject jsonObjectImage = images.getJSONObject(k);
-                        if (jsonObjectImage.getString("type").equals("OUTFIT_VIDEO")){
+                        if (jsonObjectImage.getString("type").equals("OUTFIT_VIDEO")) {
                             continue;
                         }
                         image = jsonObjectImage.getString("key");
@@ -80,7 +79,7 @@ public class GalleryViewModel extends ViewModel {
             System.out.println("Start of async");
             JsonRequestService jsonRequestService = new JsonRequestService();
 
-            return jsonRequestService.readJsonFromUrl("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=MALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
+            return jsonRequestService.readJsonFromUrl(strings[0]);
         }
     }
 
