@@ -54,8 +54,8 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ProductVie
 
         Picasso.get()
                 .load(product.getImagePath())
-                .placeholder(R.drawable.ic_menu_manage)
-                .error(R.drawable.ic_menu_camera)
+                .placeholder(R.drawable.ic_loading)
+                .error(R.drawable.ic_not_found)
                 .fit()
                 .into(holder.imageView);
         bind(holder);

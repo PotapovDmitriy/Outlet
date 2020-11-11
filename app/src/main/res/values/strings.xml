@@ -12,4 +12,5 @@
     <string name="menu_adidas">Adidas</string>
     <string name="men">Мужчины</string>
     <string name="women">Женщины</string>
+    <string name="gender_choose">Для кого подобрать одежду?</string>
 </resources>

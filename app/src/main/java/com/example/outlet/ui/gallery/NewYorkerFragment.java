@@ -46,6 +46,9 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         btnMen.setOnClickListener(this);
         btnWomen.setOnTouchListener(this);
         btnMen.setOnTouchListener(this);
+        int btnWidth = root.getWidth()/2;
+        btnMen.setWidth(btnWidth);
+        btnWomen.setWidth(btnWidth);
         tvGender = root.findViewById(R.id.tvGender);
         flag = true;
         progressBar = root.findViewById(R.id.progressBar);
@@ -67,8 +70,10 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 System.out.println("Click ClickClickClick");
                 productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=FEMALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
                 btnWomen.setClickable(false);
-                btnWomen.setBackgroundColor(Color.GRAY);
-                btnMen.setBackgroundColor(Color.GREEN);
+                btnWomen.setBackgroundColor(Color.WHITE);
+                btnWomen.setTextColor(Color.LTGRAY);
+                btnMen.setBackgroundColor(Color.parseColor("#333333"));
+                btnMen.setTextColor(Color.WHITE);
                 btnMen.setClickable(true);
                 adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);
@@ -78,8 +83,10 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
             case R.id.btnMale: {
                 productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=MALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
                 btnWomen.setClickable(true);
-                btnWomen.setBackgroundColor(Color.GREEN);
-                btnMen.setBackgroundColor(Color.GRAY);
+                btnWomen.setBackgroundColor(Color.parseColor("#333333"));
+                btnWomen.setTextColor(Color.WHITE);
+                btnMen.setBackgroundColor(Color.WHITE);
+                btnMen.setTextColor(Color.LTGRAY);
                 btnMen.setClickable(false);
                 adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);

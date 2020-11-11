@@ -65,8 +65,10 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
             case R.id.btnFemale: {
                 productList = slideshowViewModel.getProductList("https://www.adidas.ru/api/plp/content-engine?query=zhenshchiny-outlet");
                 btnWomen.setClickable(false);
-                btnWomen.setBackgroundColor(Color.GRAY);
-                btnMen.setBackgroundColor(Color.GREEN);
+                btnWomen.setBackgroundColor(Color.WHITE);
+                btnWomen.setTextColor(Color.LTGRAY);
+                btnMen.setBackgroundColor(Color.parseColor("#333333"));
+                btnMen.setTextColor(Color.WHITE);
                 btnMen.setClickable(true);
                 adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);
@@ -75,8 +77,10 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
             case R.id.btnMale: {
                 productList = slideshowViewModel.getProductList("https://www.adidas.ru/api/plp/content-engine?query=muzhchiny-outlet");
                 btnWomen.setClickable(true);
-                btnWomen.setBackgroundColor(Color.GREEN);
-                btnMen.setBackgroundColor(Color.GRAY);
+                btnWomen.setBackgroundColor(Color.parseColor("#333333"));
+                btnWomen.setTextColor(Color.WHITE);
+                btnMen.setBackgroundColor(Color.WHITE);
+                btnMen.setTextColor(Color.LTGRAY);
                 btnMen.setClickable(false);
                 adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);
