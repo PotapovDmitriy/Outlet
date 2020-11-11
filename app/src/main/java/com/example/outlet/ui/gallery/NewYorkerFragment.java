@@ -18,16 +18,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.outlet.R;
-import com.example.outlet.adapters.NewYorkerAdapter;
+import com.example.outlet.adapters.OutletAdapter;
 import com.example.outlet.models.Product;
 
 import java.util.ArrayList;
 
-public class GalleryFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
+public class NewYorkerFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
-    private GalleryViewModel galleryViewModel;
+    private NewYorkerViewModel galleryViewModel;
     private RecyclerView recyclerView;
-    private NewYorkerAdapter adapter;
+    private OutletAdapter adapter;
     private Button btnMen, btnWomen;
     private ArrayList<Product> productList;
     private TextView tvGender;
@@ -38,10 +38,10 @@ public class GalleryFragment extends Fragment implements View.OnClickListener, V
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        btnMen = root.findViewById(R.id.button2);
-        btnWomen = root.findViewById(R.id.button);
+                new ViewModelProvider(this).get(NewYorkerViewModel.class);
+        View root = inflater.inflate(R.layout.fragment, container, false);
+        btnMen = root.findViewById(R.id.btnMale);
+        btnWomen = root.findViewById(R.id.btnFemale);
         btnWomen.setOnClickListener(this);
         btnMen.setOnClickListener(this);
         btnWomen.setOnTouchListener(this);
@@ -51,7 +51,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener, V
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        recyclerView = root.findViewById(R.id.recycleIdNewYorker);
+        recyclerView = root.findViewById(R.id.recycle);
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -63,25 +63,25 @@ public class GalleryFragment extends Fragment implements View.OnClickListener, V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button: {
+            case R.id.btnFemale: {
                 System.out.println("Click ClickClickClick");
                 productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=FEMALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
                 btnWomen.setClickable(false);
                 btnWomen.setBackgroundColor(Color.GRAY);
                 btnMen.setBackgroundColor(Color.GREEN);
                 btnMen.setClickable(true);
-                adapter = new NewYorkerAdapter(productList);
+                adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);
 
                 break;
             }
-            case R.id.button2: {
+            case R.id.btnMale: {
                 productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=MALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
                 btnWomen.setClickable(true);
                 btnWomen.setBackgroundColor(Color.GREEN);
                 btnMen.setBackgroundColor(Color.GRAY);
                 btnMen.setClickable(false);
-                adapter = new NewYorkerAdapter(productList);
+                adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);
                 break;
             }

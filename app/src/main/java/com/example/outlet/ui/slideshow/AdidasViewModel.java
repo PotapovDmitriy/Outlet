@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.outlet.models.Product;
 import com.example.outlet.services.JsonRequestService;
-import com.example.outlet.ui.gallery.GalleryViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,11 +16,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class SlideshowViewModel extends ViewModel {
+public class AdidasViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public AdidasViewModel() {
     }
 
     public LiveData<String> getText() {
@@ -43,7 +42,8 @@ public class SlideshowViewModel extends ViewModel {
                 JSONObject jsProduct = productsJsonArray.getJSONObject(i);
                 String id = jsProduct.getString("productId");
                 String globalId = "",
-                        productId = "";
+                productId =" ";
+                String link ="https://www.adidas.ru" + jsProduct.getString("link");;
                 boolean isSale = true;
                 String image = jsProduct.getJSONObject("image").getString("src");
                 String maintenanceGroup = jsProduct.getString("category");
@@ -51,7 +51,7 @@ public class SlideshowViewModel extends ViewModel {
                 jsProduct = asyncProduct.execute(id).get();
                 String originalPrice = jsProduct.getInt("price") + "₽";
                 String currentPrice = jsProduct.getInt("salePrice") + "₽";
-                Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, image, currentPrice, originalPrice, description);
+                Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, image, currentPrice, originalPrice, description, link);
                 productsList.add(product);
             }
 

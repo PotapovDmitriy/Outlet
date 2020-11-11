@@ -10,11 +10,12 @@
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:icon="@drawable/ic_new_yorker"
+            android:title="@string/menu_newyorker" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:icon="@drawable/ic_adidas"
+            android:title="@string/menu_adidas"
+            android:textSize="20sp"/>
     </group>
 </menu>

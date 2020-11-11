@@ -10,8 +10,9 @@ public class Product {
     private String currentPrice;
     private String originalPrice;
     private String Name;
+    private String URL;
 
-    public Product(String globalItemId, String id, String productId, String maintenanceGroup, boolean sale, String imagePath, String currentPrice, String originalPrice, String name) {
+    public Product(String globalItemId, String id, String productId, String maintenanceGroup, boolean sale, String imagePath, String currentPrice, String originalPrice, String name, String url) {
         this.globalItemId = globalItemId;
         this.id = id;
         this.productId = productId;
@@ -21,6 +22,7 @@ public class Product {
         this.currentPrice = currentPrice;
         this.originalPrice = originalPrice;
         Name = name;
+        URL = url;
     }
 
     public void setGlobalItemId(String globalItemId) {
@@ -93,5 +95,13 @@ public class Product {
 
     public String getName() {
         return Name;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 }

@@ -12,10 +12,10 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
 
-public class GalleryViewModel extends ViewModel {
+public class NewYorkerViewModel extends ViewModel {
 
 
-    public GalleryViewModel() {
+    public NewYorkerViewModel() {
 
     }
 
@@ -59,11 +59,12 @@ public class GalleryViewModel extends ViewModel {
                         if (jsonObjectImage.getString("type").equals("OUTFIT_VIDEO")) {
                             continue;
                         }
-                        image = jsonObjectImage.getString("key");
+                        image = "https://nyblobstoreprod.blob.core.windows.net/product-images-public/" + jsonObjectImage.getString("key");
                         k = images.length();
                     }
                     String globalId = jsVariant.getString("id");
-                    Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, image, currentPrice, originalPrice, description);
+                    String link = "https://www.newyorker.de/ru/products/#/detail/" + productId + "/" + globalId + "?custom=sale";
+                    Product product = new Product(globalId, id, productId, maintenanceGroup, isSale, image, currentPrice, originalPrice, description, link);
                     productsList.add(product);
                     j = variants.length();
                 }
