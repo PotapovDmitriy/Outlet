@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Outlet</string>
+    <string name="app_name">Outlets</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Outlet</string>
+    <string name="nav_header_title">Outlets</string>
     <string name="nav_header_subtitle">Выбери свои скидки</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
