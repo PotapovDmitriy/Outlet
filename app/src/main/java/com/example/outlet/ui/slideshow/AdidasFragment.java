@@ -3,11 +3,14 @@ package com.example.outlet.ui.slideshow;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,7 +28,7 @@ import com.example.outlet.ui.viewModels.UniverseViewModel;
 
 import java.util.ArrayList;
 
-public class AdidasFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
+public class AdidasFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, TextView.OnEditorActionListener {
 
 //    private AdidasViewModel slideshowViewModel;
     private UniverseViewModel slideshowViewModel;
@@ -37,6 +40,8 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
     private ArrayList<Product> productList;
     private ProgressBar progressBar;
     private ImageView logo;
+    private EditText etSearch;
+
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,6 +49,8 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
         slideshowViewModel =
                 new ViewModelProvider(this).get(UniverseViewModel.class);
         View root = inflater.inflate(R.layout.fragment, container, false);
+        etSearch = root.findViewById(R.id.search_bar_edit_text);
+        etSearch.setOnEditorActionListener(this);
         btnMen = root.findViewById(R.id.btnMale);
         btnWomen = root.findViewById(R.id.btnFemale);
         logo = root.findViewById(R.id.search_bar_hint_icon);
@@ -106,6 +113,30 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
             }
             recyclerView.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            String text = String.valueOf(etSearch.getText());
+            ArrayList<Product> newProductList = new ArrayList<>();
+            for (Product item : productList ){
+                if (item.getName().contains(text)){
+                    newProductList.add(item);
+                }
+            }
+            if (newProductList.isEmpty()){
+                tvGender.setVisibility(View.VISIBLE);
+                tvGender.setText("Таких товаров нет");
+            }
+            else {
+                tvGender.setVisibility(View.INVISIBLE);
+            }
+            adapter = new OutletAdapter(newProductList);
+            recyclerView.setAdapter(adapter);
+            return true;
         }
         return false;
     }

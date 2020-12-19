@@ -3,11 +3,14 @@ package com.example.outlet.ui.gallery;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,9 +28,9 @@ import com.example.outlet.ui.viewModels.UniverseViewModel;
 
 import java.util.ArrayList;
 
-public class NewYorkerFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
+public class NewYorkerFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, TextView.OnEditorActionListener {
 
-    private UniverseViewModel galleryViewModel;
+    private UniverseViewModel newYorkerViewModel;
     private RecyclerView recyclerView;
     private OutletAdapter adapter;
     private Button btnMen, btnWomen;
@@ -36,16 +39,19 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     private boolean flag;
     private ProgressBar progressBar;
     private ImageView logo;
+    private EditText etSearch;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
+        newYorkerViewModel =
                 new ViewModelProvider(this).get(UniverseViewModel.class);
         View root = inflater.inflate(R.layout.fragment, container, false);
         btnMen = root.findViewById(R.id.btnMale);
         btnWomen = root.findViewById(R.id.btnFemale);
         logo = root.findViewById(R.id.search_bar_hint_icon);
+        etSearch = root.findViewById(R.id.search_bar_edit_text);
+        etSearch.setOnEditorActionListener(this);
         btnWomen.setOnClickListener(this);
         btnMen.setOnClickListener(this);
         btnWomen.setOnTouchListener(this);
@@ -57,7 +63,6 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         flag = true;
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
-
         recyclerView = root.findViewById(R.id.recycle);
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
@@ -72,7 +77,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFemale: {
-                productList = galleryViewModel.getProductList("1","2");
+                productList = newYorkerViewModel.getProductList("1","2");
                 btnWomen.setClickable(false);
                 btnWomen.setBackgroundColor(Color.WHITE);
                 btnWomen.setTextColor(Color.LTGRAY);
@@ -85,7 +90,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 break;
             }
             case R.id.btnMale: {
-                productList = galleryViewModel.getProductList("1","1");
+                productList = newYorkerViewModel.getProductList("1","1");
                 btnWomen.setClickable(true);
                 btnWomen.setBackgroundColor(Color.parseColor("#333333"));
                 btnWomen.setTextColor(Color.WHITE);
@@ -109,6 +114,30 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
             }
             recyclerView.setVisibility(View.INVISIBLE);
             progressBar.setVisibility(View.VISIBLE);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            String text = String.valueOf(etSearch.getText());
+            ArrayList<Product> newProductList = new ArrayList<>();
+            for (Product item : productList ){
+                if (item.getName().contains(text)){
+                    newProductList.add(item);
+                }
+            }
+            if (newProductList.isEmpty()){
+                tvGender.setVisibility(View.VISIBLE);
+                tvGender.setText("Таких товаров нет");
+            }
+            else {
+                tvGender.setVisibility(View.INVISIBLE);
+            }
+            adapter = new OutletAdapter(newProductList);
+            recyclerView.setAdapter(adapter);
+            return true;
         }
         return false;
     }
