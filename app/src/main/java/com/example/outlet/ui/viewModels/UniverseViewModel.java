@@ -31,7 +31,7 @@ public class UniverseViewModel extends ViewModel {
     public ArrayList<Product> getProductList(String shopID, String sex) {
         AsyncRequest asyncRequest = new AsyncRequest();
         ArrayList<Product> productsList = new ArrayList<>();
-        String url = "http://78.29.35.227:3000/items/query?shops%5B0%5D=" + shopID+"&sex[0]="+sex;
+        String url = "http://78.29.35.227:3000/items/query?shops%5B0%5D=" + shopID +"&sex[0]="+sex;
         try {
 
             JSONArray productsJsonArray = asyncRequest.execute(url)
@@ -39,10 +39,17 @@ public class UniverseViewModel extends ViewModel {
                     .getJSONArray("items");
             for (int i = 0; i < productsJsonArray.length(); i++) {
                 JSONObject jsProduct = productsJsonArray.getJSONObject(i);
+                String urlProduct = null;
+                if (shopID.equals("1")){
+                    urlProduct= "https://" + jsProduct.getString("url");
+                }
+                else {
+                    urlProduct = jsProduct.getString("url");
+                }
                 Product product = new Product(jsProduct.getString("name"),
                         jsProduct.getString("shop_name"),
                         jsProduct.getInt("sex"),
-                        jsProduct.getString("url"),
+                        urlProduct,
                         jsProduct.getString("url_image"),
                         jsProduct.getInt("price_sale"),
                         jsProduct.getInt("price_origin"),

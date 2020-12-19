@@ -50,7 +50,7 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ProductVie
         holder.tvCurrentPrice.setText(new StringBuilder().append(product.getSalePrice()).append("₽").toString());
         holder.tvOriginPrice.setText(new StringBuilder().append(product.getOriginPrice()).append("₽").toString());
         holder.tvName.setText(product.getName());
-        holder.tvLink.setText(new StringBuilder().append("https://").append(product.getURL()).toString());
+        holder.tvLink.setText(product.getURL());
 
         Picasso.get()
                 .load(product.getImageURL())
