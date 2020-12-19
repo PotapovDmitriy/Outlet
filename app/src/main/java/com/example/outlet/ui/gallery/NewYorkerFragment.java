@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     private TextView tvGender;
     private boolean flag;
     private ProgressBar progressBar;
+    private ImageView logo;
 
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -42,6 +44,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         View root = inflater.inflate(R.layout.fragment, container, false);
         btnMen = root.findViewById(R.id.btnMale);
         btnWomen = root.findViewById(R.id.btnFemale);
+        logo = root.findViewById(R.id.search_bar_hint_icon);
         btnWomen.setOnClickListener(this);
         btnMen.setOnClickListener(this);
         btnWomen.setOnTouchListener(this);
@@ -58,6 +61,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         GridLayoutManager layoutManager = new GridLayoutManager(this.getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        logo.setImageResource(R.drawable.ic_nyer_white);
         return root;
     }
 

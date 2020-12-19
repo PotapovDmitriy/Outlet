@@ -13,4 +13,5 @@
     <string name="men">Мужчины</string>
     <string name="women">Женщины</string>
     <string name="gender_choose">Для кого подобрать одежду?</string>
+    <string name="search_string">Поиск</string>
 </resources>
