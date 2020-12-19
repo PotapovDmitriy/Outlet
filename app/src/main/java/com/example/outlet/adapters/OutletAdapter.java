@@ -47,13 +47,13 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ProductVie
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.tvCurrentPrice.setText(String.valueOf(product.getCurrentPrice()));
-        holder.tvOriginPrice.setText(String.valueOf(product.getOriginalPrice()));
+        holder.tvCurrentPrice.setText(new StringBuilder().append(product.getSalePrice()).append("₽").toString());
+        holder.tvOriginPrice.setText(new StringBuilder().append(product.getOriginPrice()).append("₽").toString());
         holder.tvName.setText(product.getName());
-        holder.tvLink.setText(product.getURL());
+        holder.tvLink.setText(new StringBuilder().append("https://").append(product.getURL()).toString());
 
         Picasso.get()
-                .load(product.getImagePath())
+                .load(product.getImageURL())
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.ic_not_found)
                 .fit()

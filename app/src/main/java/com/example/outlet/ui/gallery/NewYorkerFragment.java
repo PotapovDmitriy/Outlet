@@ -21,12 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.outlet.R;
 import com.example.outlet.adapters.OutletAdapter;
 import com.example.outlet.models.Product;
+import com.example.outlet.ui.viewModels.UniverseViewModel;
 
 import java.util.ArrayList;
 
 public class NewYorkerFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
-    private NewYorkerViewModel galleryViewModel;
+    private UniverseViewModel galleryViewModel;
     private RecyclerView recyclerView;
     private OutletAdapter adapter;
     private Button btnMen, btnWomen;
@@ -40,7 +41,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
-                new ViewModelProvider(this).get(NewYorkerViewModel.class);
+                new ViewModelProvider(this).get(UniverseViewModel.class);
         View root = inflater.inflate(R.layout.fragment, container, false);
         btnMen = root.findViewById(R.id.btnMale);
         btnWomen = root.findViewById(R.id.btnFemale);
@@ -71,8 +72,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFemale: {
-                System.out.println("Click ClickClickClick");
-                productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=FEMALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
+                productList = galleryViewModel.getProductList("1","2");
                 btnWomen.setClickable(false);
                 btnWomen.setBackgroundColor(Color.WHITE);
                 btnWomen.setTextColor(Color.LTGRAY);
@@ -85,7 +85,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 break;
             }
             case R.id.btnMale: {
-                productList = galleryViewModel.getProductList("https://api.newyorker.de/csp/products/public/query?limit=250&offset=0&filters[country]=ru&filters[gender]=MALE&filters[brand]=&filters[color]=&filters[web_category]=&filters[likes]=&filters[collections]=&filters[editorials]=&filters[sale]=true");
+                productList = galleryViewModel.getProductList("1","1");
                 btnWomen.setClickable(true);
                 btnWomen.setBackgroundColor(Color.parseColor("#333333"));
                 btnWomen.setTextColor(Color.WHITE);

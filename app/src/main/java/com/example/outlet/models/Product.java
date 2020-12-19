@@ -3,14 +3,14 @@ package com.example.outlet.models;
 public class Product {
     private String name;
     private String shopName;
-    private String sex;
+    private int sex;
     private String URL;
     private String imageURL;
     private int salePrice;
     private int originPrice;
     private String category;
 
-    public Product(String name, String shopName, String sex, String URL, String imageURL, int salePrice, int originPrice, String category) {
+    public Product(String name, String shopName, int sex, String URL, String imageURL, int salePrice, int originPrice, String category) {
         this.name = name;
         this.shopName = shopName;
         this.sex = sex;
@@ -29,7 +29,7 @@ public class Product {
         this.shopName = shopName;
     }
 
-    public void setSex(String sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
@@ -61,7 +61,7 @@ public class Product {
         return shopName;
     }
 
-    public String getSex() {
+    public int getSex() {
         return sex;
     }
 

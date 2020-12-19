@@ -21,12 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.outlet.R;
 import com.example.outlet.adapters.OutletAdapter;
 import com.example.outlet.models.Product;
+import com.example.outlet.ui.viewModels.UniverseViewModel;
 
 import java.util.ArrayList;
 
 public class AdidasFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
-    private AdidasViewModel slideshowViewModel;
+//    private AdidasViewModel slideshowViewModel;
+    private UniverseViewModel slideshowViewModel;
     private RecyclerView recyclerView;
     private OutletAdapter adapter;
     private Button btnMen, btnWomen;
@@ -40,7 +42,7 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         slideshowViewModel =
-                new ViewModelProvider(this).get(AdidasViewModel.class);
+                new ViewModelProvider(this).get(UniverseViewModel.class);
         View root = inflater.inflate(R.layout.fragment, container, false);
         btnMen = root.findViewById(R.id.btnMale);
         btnWomen = root.findViewById(R.id.btnFemale);
@@ -67,7 +69,7 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFemale: {
-                productList = slideshowViewModel.getProductList("https://www.adidas.ru/api/plp/content-engine?query=zhenshchiny-outlet");
+                productList = slideshowViewModel.getProductList("2","2");
                 btnWomen.setClickable(false);
                 btnWomen.setBackgroundColor(Color.WHITE);
                 btnWomen.setTextColor(Color.LTGRAY);
@@ -79,7 +81,7 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
                 break;
             }
             case R.id.btnMale: {
-                productList = slideshowViewModel.getProductList("https://www.adidas.ru/api/plp/content-engine?query=muzhchiny-outlet");
+                productList = slideshowViewModel.getProductList("2","1");
                 btnWomen.setClickable(true);
                 btnWomen.setBackgroundColor(Color.parseColor("#333333"));
                 btnWomen.setTextColor(Color.WHITE);
