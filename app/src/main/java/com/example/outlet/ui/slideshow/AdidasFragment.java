@@ -102,6 +102,8 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
         }
         progressBar.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
+        etSearch.setText(null);
+        tvGender.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -120,7 +122,11 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            String text = String.valueOf(etSearch.getText());
+            if(productList == null){
+                tvGender.setText("Необходимо выбрать пол!)");
+                return false;
+            }
+            String text = String.valueOf(etSearch.getText()).trim();
             ArrayList<Product> newProductList = new ArrayList<>();
             for (Product item : productList ){
                 if (item.getName().contains(text)){

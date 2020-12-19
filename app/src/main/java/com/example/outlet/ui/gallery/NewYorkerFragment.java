@@ -86,7 +86,6 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 btnMen.setClickable(true);
                 adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);
-
                 break;
             }
             case R.id.btnMale: {
@@ -104,6 +103,8 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         }
         progressBar.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
+        etSearch.setText(null);
+        tvGender.setVisibility(View.INVISIBLE);
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -121,7 +122,11 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            String text = String.valueOf(etSearch.getText());
+            if(productList == null){
+                tvGender.setText("Необходимо выбрать пол!)");
+                return false;
+            }
+            String text = String.valueOf(etSearch.getText()).trim();
             ArrayList<Product> newProductList = new ArrayList<>();
             for (Product item : productList ){
                 if (item.getName().contains(text)){
