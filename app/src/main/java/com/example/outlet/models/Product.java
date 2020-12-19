@@ -1,107 +1,87 @@
 package com.example.outlet.models;
 
 public class Product {
-    private String globalItemId;
-    private String id;
-    private String productId;
-    private String maintenanceGroup;
-    private boolean sale;
-    private String imagePath;
-    private String currentPrice;
-    private String originalPrice;
-    private String Name;
+    private String name;
+    private String shopName;
+    private String sex;
     private String URL;
+    private String imageURL;
+    private int salePrice;
+    private int originPrice;
+    private String category;
 
-    public Product(String globalItemId, String id, String productId, String maintenanceGroup, boolean sale, String imagePath, String currentPrice, String originalPrice, String name, String url) {
-        this.globalItemId = globalItemId;
-        this.id = id;
-        this.productId = productId;
-        this.maintenanceGroup = maintenanceGroup;
-        this.sale = sale;
-        this.imagePath = imagePath;
-        this.currentPrice = currentPrice;
-        this.originalPrice = originalPrice;
-        Name = name;
-        URL = url;
-    }
-
-    public void setGlobalItemId(String globalItemId) {
-        this.globalItemId = globalItemId;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public void setMaintenanceGroup(String maintenanceGroup) {
-        this.maintenanceGroup = maintenanceGroup;
-    }
-
-    public void setSale(boolean sale) {
-        this.sale = sale;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public void setCurrentPrice(String currentPrice) {
-        this.currentPrice = currentPrice;
-    }
-
-    public void setOriginalPrice(String originalPrice) {
-        this.originalPrice = originalPrice;
+    public Product(String name, String shopName, String sex, String URL, String imageURL, int salePrice, int originPrice, String category) {
+        this.name = name;
+        this.shopName = shopName;
+        this.sex = sex;
+        this.URL = URL;
+        this.imageURL = imageURL;
+        this.salePrice = salePrice;
+        this.originPrice = originPrice;
+        this.category = category;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public String getGlobalItemId() {
-        return globalItemId;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
-    public String getId() {
-        return id;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
-    public String getProductId() {
-        return productId;
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
-    public String getMaintenanceGroup() {
-        return maintenanceGroup;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    public boolean isSale() {
-        return sale;
+    public void setSalePrice(int salePrice) {
+        this.salePrice = salePrice;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public void setOriginPrice(int originPrice) {
+        this.originPrice = originPrice;
     }
 
-    public String getCurrentPrice() {
-        return currentPrice;
-    }
-
-    public String getOriginalPrice() {
-        return originalPrice;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {
-        return Name;
+        return name;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public String getSex() {
+        return sex;
     }
 
     public String getURL() {
         return URL;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public int getSalePrice() {
+        return salePrice;
+    }
+
+    public int getOriginPrice() {
+        return originPrice;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }
