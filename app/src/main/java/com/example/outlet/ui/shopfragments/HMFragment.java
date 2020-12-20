@@ -64,7 +64,7 @@ public class HMFragment extends Fragment implements View.OnClickListener, View.O
         etSearch.setOnClickListener(this);
         clearSearch = root.findViewById(R.id.im_clear_search);
         clearSearch.setOnClickListener(this);
-        logo.setImageResource(R.drawable.ic_h_m);
+        logo.setImageResource(R.drawable.ic_h_m_white);
         filterField = root.findViewById(R.id.filterField);
         tvGender = root.findViewById(R.id.tvGender);
         progressBar = root.findViewById(R.id.progressBar);

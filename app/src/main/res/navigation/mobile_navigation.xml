@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_new_yorker"
         android:name="com.example.outlet.ui.shopfragments.NewYorkerFragment"
         android:label="@string/menu_newyorker"
         tools:layout="@layout/fragment" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_adidas"
         android:name="com.example.outlet.ui.shopfragments.AdidasFragment"
         android:label="@string/menu_adidas"
         tools:layout="@layout/fragment" />
