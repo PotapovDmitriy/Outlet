@@ -17,4 +17,21 @@
     <string name="Promotions">Акции и скидки</string>
     <string name="menu_bershka">Bershka</string>
     <string name="h_m"><![CDATA[H&M]]></string>
+    <string name="filterChooseText">Выберите категории</string>
+    <string name="filterButtonText">Применить</string>
+    <string name="accessories">Аксессуары</string>
+    <string name="jackets">Куртки</string>
+    <string name="tshorts">Футболки, свитера</string>
+    <string name="clear_filter">Сбросить фильтры</string>
+    <string name="jacketsCategory">Куртки, пальто</string>
+    <string name="shortsCategory">Футболки, рубашки</string>
+    <string name="sweeterCategory">Кофты, пиджаки</string>
+    <string name="pantsCategory">Штаны, брюки, джинсы</string>
+    <string name="dressCategory">Платья, юбки</string>
+    <string name="clothesCategory">Обувь</string>
+    <string name="underwearCategory">Нижнее белье</string>
+    <string name="accessoriesCategory">Аксессуары</string>
+    <string name="othersCategory">Другое</string>
+    <string name="clothingCategory">Товары без категории</string>
+    <string name="open_close_filter_field">Open/close filter field</string>
 </resources>

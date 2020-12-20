@@ -52,9 +52,12 @@
 
     <TextView
         android:id="@+id/tvGender"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:text="@string/gender_choose"
+        android:textAlignment="center"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,12 +102,175 @@
                 android:hint="@string/search_string"
                 android:imeOptions="actionSearch"
                 android:inputType="textCapWords"
-                android:paddingLeft="15dp"
+                android:paddingStart="15dp"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="20sp" />
 
+            <ImageView
+                android:id="@+id/filter"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:src="@drawable/ic_filter"
+                android:contentDescription="@string/open_close_filter_field" />
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/filterField"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:background="#444444"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/my_toolbar"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/filtertext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="@string/filterChooseText"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="?android:attr/listDivider" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/checkBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/jacketsCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/shortsCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/sweeterCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/pantsCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/dressCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/clothesCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/underwearCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/accessoriesCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/othersCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:id="@+id/checkBox10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="@string/clothingCategory"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:theme="@style/MyCheckBox" />
+
+            <Button
+                android:id="@+id/clear_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarThumbHorizontal="@android:drawable/screen_background_dark"
+                android:scrollbarThumbVertical="@android:drawable/screen_background_dark"
+                android:text="@string/clear_filter"
+                android:textColorHint="#000000"
+                android:visibility="visible"
+                app:rippleColor="#000000" />
+
+            <Button
+                android:id="@+id/submitFilter"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarThumbHorizontal="@android:drawable/screen_background_dark"
+                android:scrollbarThumbVertical="@android:drawable/screen_background_dark"
+                android:text="@string/filterButtonText"
+                android:textColorHint="#000000"
+                app:rippleColor="#000000" />
+
+        </RadioGroup>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
