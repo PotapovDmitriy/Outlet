@@ -7,13 +7,16 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Акции и скидки</string>
     <string name="menu_newyorker">NewYorker</string>
     <string name="menu_adidas">Adidas</string>
     <string name="men">Мужчины</string>
     <string name="women">Женщины</string>
     <string name="gender_choose">Для кого подобрать одежду?</string>
     <string name="search_string">Поиск</string>
+    <string name="Promotions">Акции и скидки</string>
+    <string name="menu_bershka">Bershka</string>
+    <string name="h_m"><![CDATA[H&M]]></string>
     <string name="filterChooseText">Выберите категории</string>
     <string name="filterButtonText">Применить</string>
     <string name="accessories">Аксессуары</string>

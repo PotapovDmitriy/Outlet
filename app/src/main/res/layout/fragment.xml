@@ -113,7 +113,6 @@
                 android:layout_height="43dp"
                 android:src="@drawable/ic_filter"
                 android:contentDescription="@string/open_close_filter_field" />
-
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>

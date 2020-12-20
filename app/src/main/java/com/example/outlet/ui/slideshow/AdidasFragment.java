@@ -1,13 +1,17 @@
-package com.example.outlet.ui.slideshow;
+
+package com.example.outlet.ui.gallery;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,9 +32,11 @@ import com.example.outlet.ui.viewModels.UniverseViewModel;
 
 import java.util.ArrayList;
 
-public class AdidasFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
+public class AdidasFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, TextView.OnEditorActionListener {
+
 
     private UniverseViewModel adidasViewModel;
+
     private RecyclerView recyclerView;
     private OutletAdapter adapter;
     private Button btnMen, btnWomen, btnFilter, btnClear;
@@ -39,6 +45,8 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
     private TextView tvGender;
     private boolean genderFlag;
     private ProgressBar progressBar;
+    private ImageView logo;
+    private EditText etSearch;
     private ImageView logo, filter;
     private LinearLayout filterField;
     private CheckBox cb1,cb2,cb3,cb4,cb5,cb6,cb7,cb8,cb9,cb10;
@@ -53,6 +61,8 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
         initCheckBoxes(root);
         initButtons(root);
         logo = root.findViewById(R.id.search_bar_hint_icon);
+        etSearch = root.findViewById(R.id.search_bar_edit_text);
+        etSearch.setOnEditorActionListener(this);
         logo.setImageResource(R.drawable.ic_nyer_white);
         filterField = root.findViewById(R.id.filterField);
         tvGender = root.findViewById(R.id.tvGender);
@@ -125,11 +135,11 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFemale: {
+                productList = newYorkerViewModel.getProductList("2","2");
                 for(int i = 0; i < categories.size(); i++){
                     categories.get(i).setChecked(false);
                 }
                 btnClear.setVisibility(View.INVISIBLE);
-                productList = adidasViewModel.getProductList("2","2");
                 btnWomen.setClickable(false);
                 btnWomen.setBackgroundColor(Color.WHITE);
                 btnWomen.setTextColor(Color.LTGRAY);
@@ -148,7 +158,7 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
                     categories.get(i).setChecked(false);
                 }
                 btnClear.setVisibility(View.INVISIBLE);
-                productList = adidasViewModel.getProductList("2","1");
+                productList = newYorkerViewModel.getProductList("2","1");
                 btnWomen.setClickable(true);
                 btnWomen.setBackgroundColor(Color.parseColor("#333333"));
                 btnWomen.setTextColor(Color.WHITE);
@@ -241,6 +251,8 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
         recyclerView.setAdapter(adapter);
         tvGender.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
+        etSearch.setText(null);
+        tvGender.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -256,6 +268,34 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
         return false;
     }
 
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if(productList == null){
+                tvGender.setText("Необходимо выбрать пол!)");
+                return false;
+            }
+            String text = String.valueOf(etSearch.getText()).trim();
+            ArrayList<Product> newProductList = new ArrayList<>();
+            for (Product item : productList ){
+                if (item.getName().contains(text)){
+                    newProductList.add(item);
+                }
+            }
+            if (newProductList.isEmpty()){
+                tvGender.setVisibility(View.VISIBLE);
+                tvGender.setText("Таких товаров нет");
+            }
+            else {
+                tvGender.setVisibility(View.INVISIBLE);
+            }
+            adapter = new OutletAdapter(newProductList);
+            recyclerView.setAdapter(adapter);
+            return true;
+        }
+        return false;
+    }
     private void setClearActive(){
         for (int i = 0; i < categories.size(); i++){
             CheckBox cb = categories.get(i);
@@ -265,5 +305,6 @@ public class AdidasFragment extends Fragment implements View.OnClickListener, Vi
             }
         }
         btnClear.setVisibility(View.INVISIBLE);
+
     }
 }
