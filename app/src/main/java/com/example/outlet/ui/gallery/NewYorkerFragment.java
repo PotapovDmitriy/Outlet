@@ -3,6 +3,8 @@ package com.example.outlet.ui.gallery;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,26 +18,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.outlet.R;
 import com.example.outlet.adapters.OutletAdapter;
 import com.example.outlet.enums.CategoriesEnum;
 import com.example.outlet.models.Product;
 import com.example.outlet.ui.viewModels.UniverseViewModel;
-
 import java.util.ArrayList;
 
-public class NewYorkerFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, TextView.OnEditorActionListener {
+public class NewYorkerFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, TextView.OnEditorActionListener, TextWatcher {
 
 
     private UniverseViewModel newYorkerViewModel;
-
     private RecyclerView recyclerView;
     private OutletAdapter adapter;
     private Button btnMen, btnWomen, btnFilter, btnClear;
@@ -44,13 +42,13 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     private TextView tvGender;
     private boolean genderFlag;
     private ProgressBar progressBar;
-    private ImageView logo;
     private EditText etSearch;
-    private ImageView logo, filter;
+    private ImageView logo, filter, clearSearch;
     private LinearLayout filterField;
     private CheckBox cb1,cb2,cb3,cb4,cb5,cb6,cb7,cb8,cb9,cb10;
     private ArrayList<CheckBox> categories;
     private CategoriesEnum categoriesEnum = new CategoriesEnum();
+
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +60,10 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         logo = root.findViewById(R.id.search_bar_hint_icon);
         etSearch = root.findViewById(R.id.search_bar_edit_text);
         etSearch.setOnEditorActionListener(this);
+        etSearch.addTextChangedListener(this);
+        etSearch.setOnClickListener(this);
+        clearSearch = root.findViewById(R.id.im_clear_search);
+        clearSearch.setOnClickListener(this);
         logo.setImageResource(R.drawable.ic_nyer_white);
         filterField = root.findViewById(R.id.filterField);
         tvGender = root.findViewById(R.id.tvGender);
@@ -135,10 +137,10 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.btnFemale: {
                 productList = newYorkerViewModel.getProductList("1","2");
-                for(int i = 0; i < categories.size(); i++){
-                    categories.get(i).setChecked(false);
+                clearCheckBox();
+                if(!etSearch.getText().toString().isEmpty()){
+                    etSearch.setText(null);
                 }
-                btnClear.setVisibility(View.INVISIBLE);
                 btnWomen.setClickable(false);
                 btnWomen.setBackgroundColor(Color.WHITE);
                 btnWomen.setTextColor(Color.LTGRAY);
@@ -153,10 +155,10 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 break;
             }
             case R.id.btnMale: {
-                for(int i = 0; i < categories.size(); i++){
-                    categories.get(i).setChecked(false);
+                clearCheckBox();
+                if(!etSearch.getText().toString().isEmpty()){
+                    etSearch.setText(null);
                 }
-                btnClear.setVisibility(View.INVISIBLE);
                 productList = newYorkerViewModel.getProductList("1","1");
                 btnWomen.setClickable(true);
                 btnWomen.setBackgroundColor(Color.parseColor("#333333"));
@@ -194,10 +196,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 break;
             }
             case R.id.clear_button:{
-                for(int i = 0; i < categories.size(); i++){
-                    categories.get(i).setChecked(false);
-                }
-                btnClear.setVisibility(View.INVISIBLE);
+                clearCheckBox();
                 filterField.setVisibility(View.GONE);
                 adapter = new OutletAdapter(productList);
                 recyclerView.setAdapter(adapter);
@@ -208,10 +207,29 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 filterField.setVisibility(View.GONE);
                 break;
             }
+            case R.id.search_bar_edit_text:{
+                filterField.setVisibility(View.GONE);
+                break;
+            }
+            case R.id.im_clear_search:{
+                etSearch.setText(null);
+                clearSearch.setVisibility(View.INVISIBLE);
+                filter.setVisibility(View.VISIBLE);
+                adapter = new OutletAdapter(productList);
+                recyclerView.setAdapter(adapter);
+                tvGender.setVisibility(View.INVISIBLE);
+                clearCheckBox();
+            }
         }
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+    private void clearCheckBox(){
+        for(int i = 0; i < categories.size(); i++){
+            categories.get(i).setChecked(false);
+        }
+        btnClear.setVisibility(View.INVISIBLE);
+    }
     private void setFilterProductList(){
         filterProductList = new ArrayList<>();
         ArrayList<String> filterCategories = new ArrayList<>();
@@ -227,10 +245,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
             return;
         }
         if(productList == null){
-            for(int i = 0; i < categories.size(); i++){
-                categories.get(i).setChecked(false);
-            }
-            btnClear.setVisibility(View.INVISIBLE);
+            clearCheckBox();
             tvGender.setText("Сначала выберите для кого хотите подобрать одежду");
             return;
         }
@@ -240,6 +255,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 filterProductList.add(product);
             }
         }
+
         if(filterProductList.size() == 0){
             recyclerView.setVisibility(View.INVISIBLE);
             tvGender.setText("По вашему запросу ничего не найдено.Попробуйте изменить условия фильтра.");
@@ -250,8 +266,9 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         recyclerView.setAdapter(adapter);
         tvGender.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
-        etSearch.setText(null);
-        tvGender.setVisibility(View.INVISIBLE);
+        if(!etSearch.getText().toString().isEmpty()){
+            etSearch.setText(null);
+        }
     }
 
     @Override
@@ -266,7 +283,6 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         }
         return false;
     }
-
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -295,6 +311,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         }
         return false;
     }
+
     private void setClearActive(){
         for (int i = 0; i < categories.size(); i++){
             CheckBox cb = categories.get(i);
@@ -305,5 +322,31 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         }
         btnClear.setVisibility(View.INVISIBLE);
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if(s.length() > 0){
+            filter.setVisibility(View.INVISIBLE);
+            clearSearch.setVisibility(View.VISIBLE);
+        }
+        else {
+            filter.setVisibility(View.VISIBLE);
+            clearSearch.setVisibility(View.INVISIBLE);
+            adapter = new OutletAdapter(productList);
+            recyclerView.setAdapter(adapter);
+            tvGender.setVisibility(View.INVISIBLE);
+            clearCheckBox();
+        }
     }
 }
