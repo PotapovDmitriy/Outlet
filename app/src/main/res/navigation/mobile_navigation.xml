@@ -13,13 +13,23 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.outlet.ui.gallery.NewYorkerFragment"
+        android:name="com.example.outlet.ui.shopfragments.NewYorkerFragment"
         android:label="@string/menu_newyorker"
         tools:layout="@layout/fragment" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.outlet.ui.slideshow.AdidasFragment"
+        android:name="com.example.outlet.ui.shopfragments.AdidasFragment"
         android:label="@string/menu_adidas"
+        tools:layout="@layout/fragment" />
+    <fragment
+        android:id="@+id/nav_HM"
+        android:name="com.example.outlet.ui.shopfragments.HMFragment"
+        android:label="@string/h_m"
+        tools:layout="@layout/fragment" />
+    <fragment
+        android:id="@+id/nav_bershka"
+        android:name="com.example.outlet.ui.shopfragments.BershkaFragment"
+        android:label="@string/menu_bershka"
         tools:layout="@layout/fragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.outlet.ui.gallery;
+package com.example.outlet.ui.shopfragments;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -30,10 +30,10 @@ import com.example.outlet.models.Product;
 import com.example.outlet.ui.viewModels.UniverseViewModel;
 import java.util.ArrayList;
 
-public class NewYorkerFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, TextView.OnEditorActionListener, TextWatcher {
+public class HMFragment extends Fragment implements View.OnClickListener, View.OnTouchListener, TextView.OnEditorActionListener, TextWatcher {
 
 
-    private UniverseViewModel newYorkerViewModel;
+    private UniverseViewModel hmViewModel;
     private RecyclerView recyclerView;
     private OutletAdapter adapter;
     private Button btnMen, btnWomen, btnFilter, btnClear;
@@ -52,7 +52,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        newYorkerViewModel =
+        hmViewModel =
                 new ViewModelProvider(this).get(UniverseViewModel.class);
         View root = inflater.inflate(R.layout.fragment, container, false);
         initCheckBoxes(root);
@@ -64,7 +64,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
         etSearch.setOnClickListener(this);
         clearSearch = root.findViewById(R.id.im_clear_search);
         clearSearch.setOnClickListener(this);
-        logo.setImageResource(R.drawable.ic_nyer_white);
+        logo.setImageResource(R.drawable.ic_h_m);
         filterField = root.findViewById(R.id.filterField);
         tvGender = root.findViewById(R.id.tvGender);
         progressBar = root.findViewById(R.id.progressBar);
@@ -136,7 +136,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnFemale: {
-                productList = newYorkerViewModel.getProductList("1","2");
+                productList = hmViewModel.getProductList("3","2");
                 clearCheckBox();
                 if(!etSearch.getText().toString().isEmpty()){
                     etSearch.setText(null);
@@ -159,7 +159,7 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
                 if(!etSearch.getText().toString().isEmpty()){
                     etSearch.setText(null);
                 }
-                productList = newYorkerViewModel.getProductList("1","1");
+                productList = hmViewModel.getProductList("3","1");
                 btnWomen.setClickable(true);
                 btnWomen.setBackgroundColor(Color.parseColor("#333333"));
                 btnWomen.setTextColor(Color.WHITE);
@@ -321,7 +321,6 @@ public class NewYorkerFragment extends Fragment implements View.OnClickListener,
             }
         }
         btnClear.setVisibility(View.INVISIBLE);
-
     }
 
     @Override
