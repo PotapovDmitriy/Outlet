@@ -294,7 +294,7 @@ public class HMFragment extends Fragment implements View.OnClickListener, View.O
             String text = String.valueOf(etSearch.getText()).trim();
             ArrayList<Product> newProductList = new ArrayList<>();
             for (Product item : productList ){
-                if (item.getName().contains(text)){
+                if (item.getName().toLowerCase().contains(text.toLowerCase())){
                     newProductList.add(item);
                 }
             }

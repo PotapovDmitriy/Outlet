@@ -49,6 +49,10 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ProductVie
         Product product = productList.get(position);
         holder.tvCurrentPrice.setText(new StringBuilder().append(product.getSalePrice()).append("₽").toString());
         holder.tvOriginPrice.setText(new StringBuilder().append(product.getOriginPrice()).append("₽").toString());
+        if (product.getName().length() > 45 ){
+            String name = product.getName().substring(0,42) + "...";
+            product.setName(name);
+        }
         holder.tvName.setText(product.getName());
         holder.tvLink.setText(product.getURL());
 
@@ -57,6 +61,7 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ProductVie
                 .placeholder(R.drawable.ic_loading)
                 .error(R.drawable.ic_not_found)
                 .fit()
+                .centerInside()
                 .into(holder.imageView);
         bind(holder);
     }
